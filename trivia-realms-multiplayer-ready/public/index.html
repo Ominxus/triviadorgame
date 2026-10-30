@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1627">
+<meta name="description" content="Trivia Realms Online — a two-player strategy trivia game of territory conquest. Create a private room and challenge your friend.">
+<title>Trivia Realms Online — Conquer Together, Compete Apart</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script defer src="/app.js"></script>
+</head>
+<body>
+<div class="app-shell">
+<header class="site-header">
+  <div class="brand"><div class="brand-mark">♜</div><div><div class="brand-caption">THE KINGDOM OF ELDORIA</div><div class="brand-title">TRIVIA <span>REALMS</span></div></div></div>
+  <div class="header-tools"><span id="connectionPill" class="connection-pill connecting"><span class="connection-dot"></span> Connecting</span><button id="rulesButton" class="ghost-button" type="button">📜 How to play</button><button id="exitButton" type="button" class="ghost-button hidden">Leave room</button></div>
+</header>
+<main>
+<section id="homeScreen" class="home-layout">
+  <div class="intro-col">
+    <div class="eyebrow">⚔ LIVE TWO-PLAYER MULTIPLAYER</div>
+    <h1 class="hero-title">A kingdom<br>for <em>two minds.</em></h1>
+    <p class="hero-copy">Conquer lands, win trivia duels and capture the rival castle. Battle your friend from anywhere — all you need is a private room code.</p>
+    <div class="feature-pills"><span>🗺️ 18 territories</span><span>⚡ Real-time battles</span><span>🔒 Private rooms</span><span>🧠 96 questions</span></div>
+    <div class="mini-illustration" aria-hidden="true"><div class="mini-glow"></div><span>♜</span><span>⚔</span><span>♞</span><div class="mini-subtitle">KNOWLEDGE IS YOUR STRONGEST WEAPON</div></div>
+  </div>
+  <div class="entrance-card">
+    <div class="card-kicker">✦ YOUR NEXT ADVENTURE</div>
+    <h2>Enter the realm</h2>
+    <p>One player hosts. The other joins using the six-character code.</p>
+    <div class="tab-bar" role="tablist" aria-label="Choose a way to play"><button type="button" data-tab="create" class="tab active" aria-selected="true">Create a room</button><button type="button" data-tab="join" class="tab" aria-selected="false">Join a room</button></div>
+    <form id="roomForm" autocomplete="off">
+      <label for="displayName">YOUR CHAMPION NAME</label><input id="displayName" name="displayName" maxlength="18" placeholder="Enter your name" required value="Player" aria-required="true">
+      <div id="joinFields" class="hidden"><label for="roomInput">ROOM CODE</label><input id="roomInput" name="roomInput" maxlength="6" placeholder="e.g. A4B7CD" autocomplete="off" autocapitalize="characters" spellcheck="false" class="code-input"></div>
+      <div id="createFields"><label for="matchMode">CAMPAIGN LENGTH</label><select id="matchMode" name="matchMode"><option value="quick">Quick campaign · 30 turns</option><option value="long">Grand campaign · 42 turns</option></select></div>
+      <button id="roomSubmit" type="submit" class="primary-button wide">♜ Create private room <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="form-note">No sign-up. No downloads. Just open the same website on two computers.</p>
+    <div id="homeError" class="inline-error hidden" role="alert"></div>
+  </div>
+</section>
+<section id="roomScreen" class="hidden">
+  <div class="room-ribbon"><div><div class="card-kicker">YOUR PRIVATE MULTIPLAYER ROOM</div><div class="room-title-line">Room <span id="roomCodeText" class="room-code">------</span></div></div><div class="room-buttons"><button type="button" class="outline-button" data-action="copy-code">⧉ Copy code</button><button type="button" class="primary-button compact" data-action="copy-link">🔗 Copy invite link</button></div></div>
+  <div id="lobbyStage" class="lobby-layout hidden">
+    <div class="waiting-panel"><div class="crown-ornament">♛</div><div class="eyebrow">READY YOUR ARMIES</div><h2>The battle awaits</h2><p id="lobbyMessage">Waiting for your rival to enter the kingdom.</p><div id="lobbyPlayers" class="lobby-players"></div><div id="lobbyControls"></div><div class="lobby-tip">💡 Send your friend the invite link or just the six-character room code.</div></div>
+    <div class="lobby-guide"><div class="card-kicker">THE RULES OF CONQUEST</div><h3>Outsmart. Outmaneuver. Outlast.</h3><div class="guide-row"><span>01</span><div><b>Expand your kingdom</b><p>Take turns answering trivia to capture neighboring lands.</p></div></div><div class="guide-row"><span>02</span><div><b>Challenge your rival</b><p>Both answer the same question in secret. The faster correct answer wins.</p></div></div><div class="guide-row"><span>03</span><div><b>Storm the castle</b><p>Break through two castle shields to claim an instant victory.</p></div></div></div>
+  </div>
+  <div id="matchStage" class="match-layout hidden">
+    <section class="map-panel"><div class="map-topline"><div><div class="card-kicker">THE KINGDOM OF ELDORIA</div><h2>The Conquest Map</h2><p id="mapSubtitle">Choose an adjacent territory to capture.</p></div><span id="phaseBadge" class="phase-badge">🌿 EXPANSION</span></div><div class="map-area"><svg id="realmMap" viewBox="0 0 650 465" role="img" aria-label="Conquest map with 18 territories"></svg></div><div class="map-legend"><div><i class="legend-dot blue"></i><span id="legendBlue">Azure</span></div><div><i class="legend-dot red"></i><span id="legendRed">Crimson</span></div><div><i class="legend-dot neutral"></i> Unclaimed</div></div><div id="mapFooter" class="map-footer">The kingdom waits.</div></section>
+    <aside class="game-sidebar"><section class="sidebar-card"><div class="card-kicker">⚜ THE RIVAL HOUSES</div><div id="scoreboard"></div></section><section class="sidebar-card action-card"><div class="card-kicker">✦ CURRENT CAMPAIGN</div><div id="turnInfo"></div></section><section class="sidebar-card chronicle"><div class="card-kicker">⚔ CHRONICLE OF BATTLES</div><div id="battleLog"></div></section></aside>
+  </div>
+</section>
+</main>
+<footer class="footer">A fan-made original territory trivia game · Online edition · One shared kingdom, two rival crowns.</footer>
+</div>
+<div id="sceneOverlay" class="scene-overlay hidden" role="presentation"><div id="sceneCard" class="scene-card" role="dialog" aria-modal="true" aria-live="polite"></div></div>
+<div id="rulesOverlay" class="scene-overlay hidden" role="presentation"><div class="scene-card rules-card" role="dialog" aria-modal="true" aria-label="How to play"><div class="center-symbol">📜</div><div class="card-kicker center">THE FIELD MANUAL</div><h2>How to play</h2><div class="rule-section"><b>1 · Create or join</b><p>One player creates a private room, sends the code or invite link, and starts the match after their friend joins.</p></div><div class="rule-section"><b>2 · Expand (first 16 turns)</b><p>On your turn, click a glowing neutral territory next to your land. Answer correctly within 20 seconds to claim it.</p></div><div class="rule-section"><b>3 · Battle</b><p>After expansion, attack neighboring enemy territory or continue claiming neutral land. Both players answer the same question privately and at the same time. One correct answer beats an incorrect one. If both answer correctly, the faster answer wins. Exact ties or two wrong answers favor the defender.</p></div><div class="rule-section"><b>4 · Conquer the castle</b><p>Attack the rival castle successfully twice to win instantly. Otherwise, highest score wins when the campaign ends. Each player gets one 50:50 lifeline per match.</p></div><div class="rule-section"><b>5 · Stay connected</b><p>If a player disconnects during a question, the clock pauses until both return. The same browser can reclaim a seat automatically, unless the room is cleared by a server restart.</p></div><button class="primary-button wide" type="button" data-action="close-rules">Back to the kingdom →</button></div></div>
+<div id="toast" class="toast hidden" role="status"></div>
+</body>
+</html>
